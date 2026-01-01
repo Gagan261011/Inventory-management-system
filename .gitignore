@@ -1,0 +1,55 @@
+# Build outputs
+**/target/
+**/build/
+**/dist/
+**/out/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# Logs
+**/logs/
+*.log
+
+# Test reports
+api-test-report*.txt
+
+# Node modules
+**/node_modules/
+
+# Angular build
+frontend/.angular/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven wrapper (optional - can be committed)
+.mvn/
+
+# Compiled files
+*.class
+*.jar
+*.war
+
+# Package files
+*.zip
+*.tar.gz
+*.rar
+
+# H2 database files
+*.db
+*.mv.db
+*.trace.db

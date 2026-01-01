@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://ims.com/inventory/soap"
+           targetNamespace="http://ims.com/inventory/soap"
+           elementFormDefault="qualified">
+
+    <!-- Stock Report Request -->
+    <xs:element name="getStockReportRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="warehouseId" type="xs:long"/>
+                <xs:element name="fromDate" type="xs:date"/>
+                <xs:element name="toDate" type="xs:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Stock Report Response -->
+    <xs:element name="getStockReportResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="warehouseId" type="xs:long"/>
+                <xs:element name="warehouseName" type="xs:string"/>
+                <xs:element name="reportDate" type="xs:dateTime"/>
+                <xs:element name="fromDate" type="xs:date"/>
+                <xs:element name="toDate" type="xs:date"/>
+                <xs:element name="stockPositions" type="tns:stockPosition" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="movementSummary" type="tns:movementSummary"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Stock Position Type -->
+    <xs:complexType name="stockPosition">
+        <xs:sequence>
+            <xs:element name="itemId" type="xs:long"/>
+            <xs:element name="sku" type="xs:string"/>
+            <xs:element name="itemName" type="xs:string"/>
+            <xs:element name="currentQuantity" type="xs:int"/>
+            <xs:element name="minStockLevel" type="xs:int"/>
+            <xs:element name="maxStockLevel" type="xs:int"/>
+            <xs:element name="unitPrice" type="xs:decimal"/>
+            <xs:element name="stockValue" type="xs:decimal"/>
+            <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Movement Summary Type -->
+    <xs:complexType name="movementSummary">
+        <xs:sequence>
+            <xs:element name="totalInbound" type="xs:int"/>
+            <xs:element name="totalOutbound" type="xs:int"/>
+            <xs:element name="totalAdjustments" type="xs:int"/>
+            <xs:element name="inboundValue" type="xs:decimal"/>
+            <xs:element name="outboundValue" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Get Low Stock Items Request -->
+    <xs:element name="getLowStockItemsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="warehouseId" type="xs:long" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Get Low Stock Items Response -->
+    <xs:element name="getLowStockItemsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="lowStockItems" type="tns:stockPosition" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="totalCount" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,126 @@
+type Query {
+    # Get all items with optional pagination
+    items(page: Int = 0, size: Int = 20): ItemPage!
+    
+    # Get item by ID
+    item(id: ID!): Item
+    
+    # Get item by SKU
+    itemBySku(sku: String!): Item
+    
+    # Search items by text (name, description, SKU)
+    searchItems(text: String, categoryId: ID, minStock: Int, maxStock: Int): [Item!]!
+    
+    # Get all categories
+    categories: [Category!]!
+    
+    # Get category by ID
+    category(id: ID!): Category
+    
+    # Get all suppliers
+    suppliers: [Supplier!]!
+    
+    # Get supplier by ID
+    supplier(id: ID!): Supplier
+}
+
+type Mutation {
+    # Create new item (Admin only)
+    createItem(input: CreateItemInput!): Item!
+    
+    # Update item (Admin only)
+    updateItem(id: ID!, input: UpdateItemInput!): Item!
+    
+    # Delete item (Admin only)
+    deleteItem(id: ID!): Boolean!
+    
+    # Update item stock threshold
+    updateItemStockThreshold(id: ID!, minStock: Int!, maxStock: Int!): Item!
+    
+    # Create category (Admin only)
+    createCategory(input: CreateCategoryInput!): Category!
+    
+    # Create supplier (Admin only)
+    createSupplier(input: CreateSupplierInput!): Supplier!
+}
+
+type Item {
+    id: ID!
+    sku: String!
+    name: String!
+    description: String
+    category: Category
+    supplier: Supplier
+    unitPrice: Float!
+    minStockLevel: Int!
+    maxStockLevel: Int!
+    reorderPoint: Int!
+    unitOfMeasure: String!
+    active: Boolean!
+    createdAt: String
+    updatedAt: String
+}
+
+type ItemPage {
+    content: [Item!]!
+    totalElements: Int!
+    totalPages: Int!
+    number: Int!
+    size: Int!
+}
+
+type Category {
+    id: ID!
+    name: String!
+    description: String
+    items: [Item!]
+}
+
+type Supplier {
+    id: ID!
+    name: String!
+    contactPerson: String
+    email: String
+    phone: String
+    address: String
+    active: Boolean!
+}
+
+input CreateItemInput {
+    sku: String!
+    name: String!
+    description: String
+    categoryId: ID
+    supplierId: ID
+    unitPrice: Float!
+    minStockLevel: Int = 10
+    maxStockLevel: Int = 1000
+    reorderPoint: Int = 20
+    unitOfMeasure: String = "UNIT"
+}
+
+input UpdateItemInput {
+    name: String
+    description: String
+    categoryId: ID
+    supplierId: ID
+    unitPrice: Float
+    minStockLevel: Int
+    maxStockLevel: Int
+    reorderPoint: Int
+    unitOfMeasure: String
+    active: Boolean
+}
+
+input CreateCategoryInput {
+    name: String!
+    description: String
+}
+
+input CreateSupplierInput {
+    name: String!
+    contactPerson: String
+    email: String
+    phone: String
+    address: String
+}
